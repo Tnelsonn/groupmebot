@@ -3,9 +3,45 @@ var HTTPS = require('https');
 
 var botID = process.env.BOT_ID;
 
+//
+const {readFileSync, promises: fsPromises} = require('fs');
+
+// ✅ read file SYNCHRONOUSLY
+function syncReadFile(filename) {
+  const contents = readFileSync(filename, 'utf-8');
+
+  const arr = contents.split(/\r?\n/);
+
+  console.log(arr); // 👉️ ['One', 'Two', 'Three', 'Four']
+
+  return arr;
+}
+
+
+
+// --------------------------------------------------------------
+
+// ✅ read file ASYNCHRONOUSLY
+async function asyncReadFile(filename) {
+  try {
+    const contents = await fsPromises.readFile(filename, 'utf-8');
+
+    const arr = contents.split(/\r?\n/);
+
+    console.log(arr); // 👉️ ['One', 'Two', 'Three', 'Four']
+
+    return arr;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+asyncReadFile('./example.txt');
+//
+
 function respond() {
   var request = JSON.parse(this.req.chunks[0]),
-      botRegex = /^\/wooglin reminders$/;
+      botRegex = /^\/remindme$/;
 
   if(request.text && botRegex.test(request.text)) {
     this.res.writeHead(200);
@@ -21,7 +57,7 @@ function respond() {
 function postMessage() {
   var botResponse, options, body, botReq;
 
-  botResponse = "Todays Events";
+  botResponse = Arrays.toString(syncReadFile('./example.txt'));
 
   options = {
     hostname: 'api.groupme.com',
