@@ -23,7 +23,7 @@ function respond() {
 function postMessage() {
   var botResponse, options, body, botReq;
 
-  botResponse = Arrays.toString(syncReadFile('./example.txt'));
+  botResponse = "NOV 7: ELECTIONS \n BETA THETA PI";
 
   options = {
     hostname: 'api.groupme.com',
